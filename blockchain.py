@@ -34,15 +34,16 @@ class Blockchain:
         :param data: Dados que serão armazenados no bloco
         """
         latest_block = self.latest_block()
-        return Block(latest_block.index + 1, time.time(), latest_block.hash, data)
-    
+        return Block(latest_block.index + 1, time.time(), latest_block.hash, data)    
+   
     def add_block(self, block):
         """
         Adiciona um novo bloco à blockchain após validar sua Proof-of-Work
         """
-        if block:
+        if block and self.is_valid_new_block(block, self.latest_block()):
             block.proof_of_work(self.difficulty)
             self.blocks.append(block)
+
     
     def is_first_block_valid(self):
         """
